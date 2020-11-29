@@ -1,0 +1,40 @@
+{% if dinner_list %}
+
+    <ul>
+    {% for dinner in dinner_list %}
+        <li>{{ dinner.dinnername }}</li>
+        <ul>
+            {% for dish in dinner.dishes.all %}
+            <li>{{ dish.dishname }}</li>
+            {% endfor %}
+
+            <p>price : {{ dinner.price }}</p>
+            <p>적용 가능한 스타일 :
+            {% for style in dinner.appliablestyle.all %}
+            <li>{{ style.stylename }}</li>
+            {% endfor %}
+            </p>
+        </ul>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>디너를 추가해주세요.</p>
+{% endif %}
+
+{% if style_list %}
+
+    <ul>
+        {% for style in style_list %}
+        <li>{{ style.stylename }}</li>
+        <ul>
+            {% for tableware in style.tablewares.all %}
+            <li>{{ tableware.tablewarename }}</li>
+            {% endfor %}
+        </ul>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>스타일을 추가해주세요.</p>
+{% endif %}
+
+<a href="{% url 'myorder:order_create' %}" class="btn btn-primary">주문하기</a>

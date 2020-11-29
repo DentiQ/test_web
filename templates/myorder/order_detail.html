@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container my-3">
+    <h2 class="border-bottom py-2">{{ order }}</h2>
+    <ul class="list-group">
+        <li class = "list-group-item">{{ order.dinner.dinnername }}</li>
+        <li class = "list-group-item">dinner price : {{ order.dinner.price }}</li>
+        <li class = "list-group-item">{{ order.style.stylename }}</li>
+        <li class = "list-group-item">style price : {{ order.style.price }}</li>
+        <li class = "list-group-item">people : {{ order.people }}</li>
+    </ul>
+
+    <div class="card my-3">
+        <div class="card-body">
+            <div class="card-text" style="white-space: pre-line;">요구사항 : {{ order.details }}</div>
+            <div class="d-flex justify-content-end">
+                <div class="badge badge-light p-2">
+                    {{ order.create_date }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="{% url 'myorder:order_list' %}" class="btn btn-primary">목록보기</a>
+</div>
+
+{% endblock %}
