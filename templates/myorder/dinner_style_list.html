@@ -1,3 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
 {% if dinner_list %}
 
     <ul>
@@ -11,7 +15,7 @@
             <p>price : {{ dinner.price }}</p>
             <p>적용 가능한 스타일 :
             {% for style in dinner.appliablestyle.all %}
-            <li>{{ style.stylename }}</li>
+            <p>{{ style.stylename }}</p>
             {% endfor %}
             </p>
         </ul>
@@ -37,4 +41,6 @@
     <p>스타일을 추가해주세요.</p>
 {% endif %}
 
-<a href="{% url 'myorder:order_create' %}" class="btn btn-primary">주문하기</a>
+<a href="{% url 'myorder:order_create' %}" class="btn btn-primary" {% if not user.is_authenticated %}disabled{% endif %} >주문하기</a>
+
+{% endblock %}

@@ -19,6 +19,8 @@ from django.urls import path, include
 from myorder import views
 
 urlpatterns = [
+    path('', views.index, name='index'),  # '/' 에 해당되는 path
     path('admin/', admin.site.urls),
     path('myorder/', include('myorder.urls')),
+    path('common/', include('common.urls')),
 ]

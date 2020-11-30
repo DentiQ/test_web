@@ -6,7 +6,8 @@
         <thead>
         <tr class="thead-dark">
             <th>번호</th>
-            <th>제목</th>
+            <th style="width:50%">제목</th>
+            <th>주문한 손님 id</th>
             <th>주문시각</th>
         </tr>
         </thead>
@@ -18,6 +19,7 @@
             <td>
                 <a href="{% url 'myorder:order_detail' order.id %}">{{ order }}</a>
             </td>
+            <td> {{ order.customer.username }}</td>
             <td> {{ order.created_date }} </td>
         </tr>
         {% endfor %}

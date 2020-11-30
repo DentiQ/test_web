@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -50,6 +51,8 @@ class Dinner(models.Model):
 
 class Order(models.Model):
     username = models.TextField()
+
+    customer = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     dinner = models.ForeignKey('Dinner', on_delete=models.CASCADE, default=None)
 
