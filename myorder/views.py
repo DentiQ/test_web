@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 
 # Create your views here.
@@ -34,6 +35,16 @@ def order_detail(request, order_id):
     return render(request, 'myorder/order_detail.html', context)
 
 
+def my_order_list(request):
+    if request.user:
+        order_list = Order.objects.order_by('-create_date')
+        order_list = order_list.filter(
+            Q(customer__username__icontains=request.user.username)
+        )
+        context = {'order_list': order_list}
+        return render(request, 'myorder/my_order_list.html', context)
+
+
 @login_required(login_url='common:login')
 def order_create(request):
     if request.method == 'POST':
@@ -54,4 +65,4 @@ def order_create(request):
 def order_complete(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
     order.delete()
-    return redirect('order:index')
+    return redirect('myorder:order_list')

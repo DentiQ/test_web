@@ -21,24 +21,26 @@
             </div>
         </div>
     </div>
-
+    {% if user.is_staff %}
     <a href="{% url 'myorder:order_list' %}" class="btn btn-primary">목록보기</a>
-
     <a href="#" class="delete btn btn-sm btn-outline-secondary"
-       data-uri="{% url 'myorder:order_complete' order.id  %}">주문처리</a>
+       data-uri="{% url 'myorder:order_complete' order.id %}">주문처리</a>
+    {% else %}
+    <a href="{% url 'myorder:index' %}" class="btn btn-primary">돌아가기</a>
+    {% endif %}
 
-    {% block script %}
+</div>
+
+{% endblock %}
+
+{% block script %}
     <script type='text/javascript'>
         $(document).ready(function(){
-            $(".complete").on('click', function() {
+            $(".delete").on('click', function() {
                 if(confirm("주문을 완료 처리하고 삭제하시겠습니까?")) {
                     location.href = $(this).data('uri');
                 }
             });
         });
     </script>
-    {% endblock %}
-
-</div>
-
 {% endblock %}

@@ -1,46 +1,83 @@
 {% extends 'base.html' %}
-
 {% block content %}
 
 {% if dinner_list %}
 
-    <ul>
+<div class="container my-3">
+    <h1 class="py-2 text-center">Dinner List</h1>
     {% for dinner in dinner_list %}
-        <li>{{ dinner.dinnername }}</li>
-        <ul>
-            {% for dish in dinner.dishes.all %}
-            <li>{{ dish.dishname }}</li>
-            {% endfor %}
+    <h2 class="border-bottom py-2 text-center">{{ dinner.dinnername }}</h2>
 
-            <p>price : {{ dinner.price }}</p>
-            <p>적용 가능한 스타일 :
-            {% for style in dinner.appliablestyle.all %}
-            <p>{{ style.stylename }}</p>
-            {% endfor %}
-            </p>
-        </ul>
+    <div class="card my-3">
+        <div class="card-body">
+            <h5 class="card-title">제공되는 식사</h5>
+            <ul class="list-group list-group-flush">
+                {% for dish in dinner.dishes.all %}
+                <li class="list-group-item">{{ dish.dishname }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="card my-3">
+        <div class="card-body">
+            <div class="card-title" style="white-space: pre-line;">1인당 가격 : {{ dinner.price }}</div>
+        </div>
+    </div>
+
+    <div class="card my-3">
+        <div class="card-body">
+            <h5 class="card-title">적용 가능한 스타일</h5>
+            <ul class="list-group list-group-flush">
+                {% for style in dinner.appliablestyle.all %}
+                <li class="list-group-item">{{ style.stylename }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
     {% endfor %}
-    </ul>
+</div>
+
 {% else %}
-    <p>디너를 추가해주세요.</p>
+    <div class="card my-3">
+        <div class="card-body">
+            <div class="card-text" style="white-space: pre-line;">디너 준비중입니다.</div>
+        </div>
+    </div>
 {% endif %}
 
 {% if style_list %}
 
-    <ul>
-        {% for style in style_list %}
-        <li>{{ style.stylename }}</li>
-        <ul>
-            {% for tableware in style.tablewares.all %}
-            <li>{{ tableware.tablewarename }}</li>
-            {% endfor %}
-        </ul>
-        {% endfor %}
-    </ul>
+<div class="container my-3">
+    <h1 class="py-2 text-center">Style List</h1>
+    {% for style in style_list %}
+    <h2 class="border-bottom py-2 text-center">{{ style.stylename }}</h2>
+    <div class="card my-3">
+        <div class="card-body">
+            <div class="card-text" style="white-space: pre-line;">제공되는 식기</div>
+            <ul class="list-group list-group-flush">
+                {% for tableware in style.tablewares.all %}
+                <li class="list-group-item">{{ tableware.tablewarename }}</li>
+                {% endfor %}
+            </ul>
+            <div class="card-text" style="white-space: pre-line;">스타일 적용 비용 : {{ style.price }}</div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <a href="{% url 'myorder:order_create' %}" class="btn btn-primary" {% if not user.is_authenticated %}disabled{% endif %} >주문하기</a>
+
+</div>
+
 {% else %}
-    <p>스타일을 추가해주세요.</p>
+    <div class="card my-3">
+        <div class="card-body">
+            <div class="card-text" style="white-space: pre-line;">스타일 준비중입니다.</div>
+        </div>
+    </div>
 {% endif %}
 
-<a href="{% url 'myorder:order_create' %}" class="btn btn-primary" {% if not user.is_authenticated %}disabled{% endif %} >주문하기</a>
+
 
 {% endblock %}
+

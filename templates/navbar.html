@@ -13,6 +13,16 @@
                 <a class="nav-link" href="{% url 'common:login' %}">로그인</a>
                 {% endif %}
             </li>
+
+            <li class="nav-item">
+                {% if user.is_staff %}
+                <a class="nav-link" href="{% url 'myorder:order_list' %}">주문 목록</a>
+                {% endif %}
+                {% if not user.is_staff and user.is_authenticated %}
+                <a class="nav-link" href="{% url 'myorder:my_order_list' %}">내 주문 목록</a>
+                {% endif %}
+            </li>
+
         </ul>
     </div>
 </nav>
